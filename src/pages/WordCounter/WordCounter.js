@@ -9,6 +9,7 @@ import "./WordCounter.css"
 const WordCounter = () => {
     const [text, setText] = useState('');
     const [countedWords, setWords] = useState('');
+    const [allWords, setAll] = useState([]);
 
     const showFile = (e) => {
         e.preventDefault();
@@ -39,6 +40,8 @@ const WordCounter = () => {
         console.log(words);
         setWords(words);
 
+        words = words.sort().filter(x => isNaN(x));
+
         for (var i = 0; i<words.length; i++) {
             var word = words[i];
             if (counts[word] === undefined) {
@@ -48,9 +51,12 @@ const WordCounter = () => {
                 counts[word] ++;
             }
         }
-        console.log(counts)
+        
+        setAll(Object.entries(counts).join("\n"));
+        console.log(allWords)
     }
 
+    
 
     return (
         <div className="WordCounter">
@@ -59,7 +65,7 @@ const WordCounter = () => {
             <div>
                 <input type="text" className="openTextBox" value={text} />
                 <p>Word Count: {countedWords.length}</p>
-                <p></p>
+                <p>{allWords}</p>
             </div>
             
         </div>
